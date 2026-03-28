@@ -1,0 +1,90 @@
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-info">
+                <h2>{{ userData?.firstName || 'User' }} {{ userData?.lastName || 'Profile' }}</h2>
+                <p>{{ userData?.email }}</p>
+                <span class="member-since">Member since {{ userData?.createdAt | date:'longDate' || 'recently' }}</span>
+            </div>
+        </div>
+
+        <div class="dashboard-tabs">
+            <button class="tab-btn" [class.active]="activeTab === 'reservations'" (click)="activeTab = 'reservations'">
+                Active Reservations
+            </button>
+            <button class="tab-btn" [class.active]="activeTab === 'history'" (click)="activeTab = 'history'">
+                Rental History
+            </button>
+        </div>
+
+        <div class="dashboard-content">
+
+            <!-- Loading Indicator -->
+            <div class="loading-state" *ngIf="isLoading">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <p>Loading your data...</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-state" *ngIf="errorMessage && !isLoading">
+                <p>{{ errorMessage }}</p>
+                <button class="retry-btn" (click)="fetchTransactions()">Retry</button>
+            </div>
+
+            <!-- Active Reservations View -->
+            <div class="tab-pane" *ngIf="activeTab === 'reservations' && !isLoading && !errorMessage">
+                <div class="empty-state" *ngIf="reservations.length === 0">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>You have no active reservations pending pickup.</p>
+                    <a routerLink="/cars" class="browse-btn">Browse Cars</a>
+                </div>
+
+                <div class="transaction-list">
+                    <div class="transaction-item" *ngFor="let res of reservations">
+                        <div class="item-header">
+                            <h4>{{ res.carName || 'Vehicle Rental' }}</h4>
+                            <span class="status-badge reserved"><i class="fas fa-clock"></i> Reserved</span>
+                        </div>
+                        <div class="item-details">
+                            <p><strong>Pickup:</strong> {{ res.pickupDate | date:'mediumDate' }}</p>
+                            <p><strong>Return:</strong> {{ res.returnDate | date:'mediumDate' }}</p>
+                            <p><strong>Amount Due:</strong> ${{ res.amount }} (Pay at Pickup)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Rental History View -->
+        <div class="tab-pane" *ngIf="activeTab === 'history' && !isLoading && !errorMessage">
+            <div class="history-actions" *ngIf="history.length > 0">
+                <button class="clear-history-btn" (click)="clearHistory()" [disabled]="isClearing">
+                    <i class="fas fa-trash-alt"></i> {{ isClearing ? 'Clearing...' : 'Clear History' }}
+                </button>
+            </div>
+
+            <div class="empty-state" *ngIf="history.length === 0">
+                <i class="fas fa-history"></i>
+                <p>No past rental history found.</p>
+            </div>
+
+            <div class="transaction-list">
+                    <div class="transaction-item" *ngFor="let record of history">
+                        <div class="item-header">
+                            <h4>{{ record.carName || 'Vehicle Rental' }}</h4>
+                            <span class="status-badge completed"><i class="fas fa-check-circle"></i> Completed</span>
+                        </div>
+                        <div class="item-details">
+                            <p><strong>Date:</strong> {{ record.createdAt | date:'mediumDate' }}</p>
+                            <p><strong>Payment Method:</strong> {{ formatPaymentMethod(record.paymentMethod) }}</p>
+                            <p><strong>Amount Paid:</strong> ${{ record.amount }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

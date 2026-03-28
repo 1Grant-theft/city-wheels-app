@@ -1,0 +1,296 @@
+.cars-header {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/assets/car banner.jpg') center/cover no-repeat;
+    padding: 80px 20px;
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.title {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -1px;
+}
+
+.back-btn {
+    background: transparent;
+    border: 2px solid #0056b3;
+    padding: 10px 24px;
+    border-radius: 30px;
+    color: #0056b3;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-btn:hover {
+    background: #0056b3;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.filters-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1320px;
+    margin: 0 auto 40px;
+    padding: 0 40px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+.category-box select {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    cursor: pointer;
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.category-box select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+@media (max-width: 768px) {
+    .cars-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+.back-btn:hover {
+background: #0056b3;
+color: #fff;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.car-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 30px;
+padding: 0 40px 60px;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.car-card {
+background: white;
+border-radius: 12px;
+padding: 20px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+text-align: center;
+transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+font-family: 'Inter', sans-serif;
+position: relative;
+display: flex;
+flex-direction: column;
+}
+
+.car-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+}
+
+.img-wrapper {
+margin: -20px -20px 15px -20px;
+border-radius: 12px 12px 0 0;
+overflow: hidden;
+}
+
+.car-card img {
+width: 100%;
+height: 180px;
+object-fit: cover;
+transition: transform 0.6s ease;
+}
+
+.car-card:hover img {
+transform: scale(1.05);
+}
+
+h3 {
+font-size: 1.3rem;
+font-weight: 700;
+color: #222;
+margin-bottom: 5px;
+}
+
+.specs {
+font-size: 0.9rem;
+color: #777;
+margin-bottom: 12px;
+font-weight: 500;
+}
+
+.price {
+font-size: 1.5rem;
+color: #0056b3;
+font-weight: 800;
+margin: 10px 0 20px;
+}
+
+.price span {
+font-size: 0.9rem;
+color: #888;
+font-weight: 500;
+}
+
+.rent-btn {
+background: #0056b3;
+padding: 12px 24px;
+border: none;
+border-radius: 8px;
+color: white;
+cursor: pointer;
+font-weight: 600;
+font-size: 1rem;
+transition: all 0.2s ease;
+width: 100%;
+margin-top: auto;
+}
+
+.rent-btn:hover {
+background: #004494;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+}
+
+/* Loading & Error States */
+.loading-container, .error-container, .empty-state {
+text-align: center;
+padding: 60px 20px;
+min-height: 40vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.loading-container p, .error-container p, .empty-state p {
+font-family: 'Inter', sans-serif;
+font-size: 1.2rem;
+color: #666;
+margin-top: 15px;
+}
+
+.loader {
+border: 4px solid #f3f3f3;
+border-top: 4px solid #0056b3;
+border-radius: 50%;
+width: 50px;
+height: 50px;
+animation: spin 1s linear infinite;
+background: transparent;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+.retry-btn {
+margin-top: 20px;
+padding: 10px 24px;
+background: #0056b3;
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+transition: background 0.2s;
+}
+
+.retry-btn:hover {
+    background: #004494;
+}
+
+/* Status Badges */
+.status-badges {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge.available {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.badge.reserved {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.reserved-until {
+    font-size: 0.85rem;
+    color: #991b1b;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.rent-btn[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

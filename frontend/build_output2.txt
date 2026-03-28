@@ -1,0 +1,55 @@
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/auth/forgot-password/forgot-password.component.css exceeded maximum budget. Budget 2.00 kB was not met by 214 bytes with a total of 2.21 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/auth/login/login.component.css exceeded maximum budget. Budget 2.00 kB was not met by 621 bytes with a total of 2.61 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/about-us/about-us.component.css exceeded maximum budget. Budget 2.00 kB was not met by 93 bytes with a total of 2.09 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/admin/admin-dashboard/admin-dashboard.component.css exceeded maximum budget. Budget 2.00 kB was not met by 3.66 kB with a total of 5.66 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/car-details/car-details.component.css exceeded maximum budget. Budget 2.00 kB was not met by 1.01 kB with a total of 3.01 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/cars/cars.component.css exceeded maximum budget. Budget 2.00 kB was not met by 1.33 kB with a total of 3.33 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/contactus/contactus.component.css exceeded maximum budget. Budget 2.00 kB was not met by 879 bytes with a total of 2.86 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/home/home.component.css exceeded maximum budget. Budget 2.00 kB was not met by 2.96 kB with a total of 4.96 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/payment/payment.component.css exceeded maximum budget. Budget 2.00 kB was not met by 1.77 kB with a total of 3.77 kB.
+
+Warning: C:/myprojects/Smart-budget/frontend/src/app/pages/profile/profile.component.css exceeded maximum budget. Budget 2.00 kB was not met by 2.30 kB with a total of 4.30 kB.
+
+
+
+Error: src/app/pages/admin/admin-dashboard/admin-dashboard.component.html:127:38 - error TS2367: This condition will always return 'false' since the types '"users"' and '"inventory"' have no overlap.
+
+127         <div class="tab-pane" *ngIf="activeTab === 'inventory'">
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/admin/admin-dashboard/admin-dashboard.component.ts:6:16
+    6   templateUrl: './admin-dashboard.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminDashboardComponent.
+
+
+Error: src/app/pages/admin/admin-dashboard/admin-dashboard.component.html:240:38 - error TS2367: This condition will always return 'false' since the types '"users"' and '"add-car"' have no overlap.
+
+240         <div class="tab-pane" *ngIf="activeTab === 'add-car'">
+                                         ~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/admin/admin-dashboard/admin-dashboard.component.ts:6:16
+    6   templateUrl: './admin-dashboard.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminDashboardComponent.
+
+
+Error: C:/myprojects/Smart-budget/frontend/src/app/pages/admin/admin-dashboard/admin-dashboard.component.css exceeded maximum budget. Budget 4.00 kB was not met by 1.66 kB with a total of 5.66 kB.
+
+Error: C:/myprojects/Smart-budget/frontend/src/app/pages/home/home.component.css exceeded maximum budget. Budget 4.00 kB was not met by 987 bytes with a total of 4.96 kB.
+
+Error: C:/myprojects/Smart-budget/frontend/src/app/pages/profile/profile.component.css exceeded maximum budget. Budget 4.00 kB was not met by 310 bytes with a total of 4.30 kB.
+
+

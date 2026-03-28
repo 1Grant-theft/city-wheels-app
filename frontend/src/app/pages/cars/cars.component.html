@@ -1,0 +1,53 @@
+<div class="cars-header">
+    <h2 class="title">Available Cars</h2>
+    <button routerLink="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+</div>
+
+<div class="filters-container">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search by make or model..." [(ngModel)]="searchTerm" (input)="filterCars()">
+    </div>
+    <div class="category-box">
+        <select [(ngModel)]="selectedCategory" (change)="filterCars()">
+            <option value="All">All Categories</option>
+            <option value="Sedan">Sedan</option>
+            <option value="SUV">SUV</option>
+            <option value="Luxury">Luxury</option>
+            <option value="Truck">Truck</option>
+        </select>
+    </div>
+</div>
+
+<div class="loading-container" *ngIf="isLoading">
+    <div class="loader"></div>
+    <p>Loading available vehicles...</p>
+</div>
+
+<div class="error-container" *ngIf="error && !isLoading">
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="fetchCars()">Retry</button>
+</div>
+
+<div class="empty-state" *ngIf="!isLoading && !error && cars.length === 0">
+    <p>No vehicles are currently available in our list.</p>
+</div>
+
+<div class="car-grid" *ngIf="!isLoading && !error && filteredCars.length > 0">
+    <div class="car-card" *ngFor="let car of filteredCars">
+        <div class="status-badges">
+            <span class="badge available" *ngIf="!car.isCurrentlyReserved">Available</span>
+            <span class="badge reserved" *ngIf="car.isCurrentlyReserved">Reserved</span>
+        </div>
+        <div class="img-wrapper">
+            <img [src]="car.image" alt="{{car.make}} {{car.model}}">
+        </div>
+        <h3>{{ car.make }} {{ car.model }}</h3>
+        <p class="specs">{{ car.year }} • {{ car.transmission }} • {{ car.seats }} Seats</p>
+        <p class="reserved-until" *ngIf="car.isCurrentlyReserved">Available after: {{ car.reservedUntil | date:'mediumDate' }}</p>
+
+        <button [routerLink]="['/cars', car.id]" class="rent-btn" [disabled]="car.isCurrentlyReserved">
+            {{ car.isCurrentlyReserved ? 'Unavailable' : 'Reserve Now' }}
+        </button>
+    </div>
+</div>

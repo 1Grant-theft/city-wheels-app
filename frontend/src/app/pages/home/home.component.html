@@ -1,0 +1,220 @@
+<section class="hero" style="background-image: url(assets/banner3cars.jpg);">
+    <div class="hero-content">
+        <h1>Drive with Confidence.</h1>
+        <p>Rent the perfect car at the best price — with City Wheels.</p>
+        <div class="hero-buttons">
+            <button routerLink="/cars" class="browse-btn">Browse Cars</button>
+            <button *ngIf="!isLoggedIn" routerLink="/signup" class="signup-btn">Sign Up</button>
+        </div>
+    </div>
+</section>
+
+<!-- section 2 -->
+<section class="featured-cars">
+    <h2>Our Featured Cars</h2>
+    
+    <div class="loading-state" *ngIf="isLoading" style="text-align: center; padding: 40px;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #38bdf8;"></i>
+        <p style="color: #64748b; margin-top: 10px;">Finding our best deals...</p>
+    </div>
+
+    <div class="cars-container" *ngIf="!isLoading">
+        <div class="car-card glass" *ngFor="let car of cars">
+            <img [src]="car.image_url" [alt]="car.make + ' ' + car.model">
+            <h3>{{ car.make }} {{ car.model }}</h3>
+            <p>Starting at ${{ car.price_per_day | number:'1.0-0' }}/day</p>
+            <button class="rent-btn" [routerLink]="['/cars', car.id]">View Details</button>
+        </div>
+    </div>
+</section>
+
+<!-- section 3: Why Choose Us (Premium Version) -->
+<section class="premium-benefits">
+    <div class="section-badge">Why Choose Us</div>
+    <h2>The City Wheels Experience</h2>
+    <p class="section-subtitle">Discover why thousands of travelers trust us for their journeys every day.</p>
+    
+    <div class="benefits-grid">
+        <div class="benefit-card glass">
+            <div class="icon-box fleet">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h3>Verified Cars</h3>
+            <p>Every vehicle undergoes a rigorous 50-point inspection to ensure absolute safety and comfort.</p>
+        </div>
+
+        <div class="benefit-card glass">
+            <div class="icon-box support">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h3>24/7 Road Side</h3>
+            <p>Rain or shine, day or night, our dedicated support team is just one tap away from helping you.</p>
+        </div>
+
+        <div class="benefit-card glass">
+            <div class="icon-box price">
+                <i class="fas fa-hand-holding-dollar"></i>
+            </div>
+            <h3>Best Price Policy</h3>
+            <p>Transparent pricing with no hidden fees. We match any competitor's price, guaranteed.</p>
+        </div>
+
+        <div class="benefit-card glass">
+            <div class="icon-box safety">
+                <i class="fas fa-shield-virus"></i>
+            </div>
+            <h3>Hybrid Protection</h3>
+            <p>Comprehensive insurance and deep sanitation after every rental for your peace of mind.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://whatsapp.com/dl/" target="_blank" class="whatsapp-float" aria-label="Contact Us on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span class="float-text">Chat with us</span>
+</a>
+
+<!-- section 4 -->
+<section class="how-it-works">
+    <h2>Here's How The Process Works</h2>
+    <div class="steps-container">
+
+        <div class="step-card">
+            <i class="fas fa-search"></i>
+            <h3>1. Browse Cars</h3>
+            <p>Explore our selection and choose the vehicle that fits your needs.</p>
+        </div>
+
+        <div class="step-card">
+            <i class="fas fa-calendar-check"></i>
+            <h3>2. Make a Reservation</h3>
+            <p>Pick your rental dates and reserve your car in just a few clicks.</p>
+        </div>
+
+        <div class="step-card">
+            <i class="fas fa-key"></i>
+            <h3>3. Pick Up & Drive</h3>
+            <p>Collect your car and enjoy a smooth and reliable driving experience.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- SECTION 5 -->
+<section class="testimonials-carousel">
+    <h2>What Our Customers Say</h2>
+
+    <div class="carousel-container">
+
+        <button class="carousel-btn prev-btn" (click)="prevSlide()">&#10094;</button>
+
+        <div class="carousel-slide active">
+            <div class="stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"Great service and reliable cars! Booking was easy and the price was worth it."</p>
+            <h4>— Jason M.</h4>
+        </div>
+
+        <div class="carousel-slide">
+            <div class="stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"The process was smooth from pickup to return. I will definitely rent again."</p>
+            <h4>— Shanice B.</h4>
+        </div>
+
+        <div class="carousel-slide">
+            <div class="stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+            <p>"Car was clean, comfortable, and fuel efficient. Excellent experience!"</p>
+            <h4>— Andre R.</h4>
+        </div>
+
+        <div class="carousel-slide">
+            <div class="stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"Customer support was available 24/7 when I needed to extend my rental. Fantastic team!"</p>
+            <h4>— Emma T.</h4>
+        </div>
+
+        <div class="carousel-slide">
+            <div class="stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <p>"Wide selection of vehicles. Found the exact SUV I needed for my family trip."</p>
+            <h4>— Michael D.</h4>
+        </div>
+
+        <button class="carousel-btn next-btn" (click)="nextSlide()">&#10095;</button>
+
+    </div>
+
+    <div class="carousel-dots">
+        <span class="dot active" (click)="goToSlide(0)"></span>
+        <span class="dot" (click)="goToSlide(1)"></span>
+        <span class="dot" (click)="goToSlide(2)"></span>
+        <span class="dot" (click)="goToSlide(3)"></span>
+        <span class="dot" (click)="goToSlide(4)"></span>
+    </div>
+</section>
+
+<!-- SECTION 6: FAQ -->
+<section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-container">
+
+        <div class="faq-item" [class.active]="activeFaq === 0" (click)="toggleFaq(0)">
+            <div class="faq-question">
+                <h3>What do I need to rent a car?</h3>
+                <i class="fas" [class.fa-chevron-down]="activeFaq !== 0" [class.fa-chevron-up]="activeFaq === 0"></i>
+            </div>
+            <div class="faq-answer" *ngIf="activeFaq === 0">
+                <p>You will need a valid driver's license, a credit or debit card in your name, and to be at least 21
+                    years of age.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" [class.active]="activeFaq === 1" (click)="toggleFaq(1)">
+            <div class="faq-question">
+                <h3>Is insurance included in the rental price?</h3>
+                <i class="fas" [class.fa-chevron-down]="activeFaq !== 1" [class.fa-chevron-up]="activeFaq === 1"></i>
+            </div>
+            <div class="faq-answer" *ngIf="activeFaq === 1">
+                <p>Basic liability insurance is included. We also offer premium collision damage waivers at the counter
+                    for extra peace of mind.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" [class.active]="activeFaq === 2" (click)="toggleFaq(2)">
+            <div class="faq-question">
+                <h3>Can I pick up the car at one location and return it to another?</h3>
+                <i class="fas" [class.fa-chevron-down]="activeFaq !== 2" [class.fa-chevron-up]="activeFaq === 2"></i>
+            </div>
+            <div class="faq-answer" *ngIf="activeFaq === 2">
+                <p>Yes, we offer one-way rentals! Please contact our support team to arrange the specific drop-off
+                    location as additional fees may apply.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" [class.active]="activeFaq === 3" (click)="toggleFaq(3)">
+            <div class="faq-question">
+                <h3>What is your cancellation policy?</h3>
+                <i class="fas" [class.fa-chevron-down]="activeFaq !== 3" [class.fa-chevron-up]="activeFaq === 3"></i>
+            </div>
+            <div class="faq-answer" *ngIf="activeFaq === 3">
+                <p>You can cancel your reservation for free up to 48 hours before your scheduled pick-up time. Late
+                    cancellations may incur a 1-day rental fee.</p>
+            </div>
+        </div>
+
+    </div>
+</section>

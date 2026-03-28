@@ -1,0 +1,55 @@
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="signup-header">
+            <img src="assets/city wheels logo 2.0.png" class="logo">
+            <h2>Create Account</h2>
+        </div>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <input placeholder="First Name" formControlName="firstName">
+            </div>
+
+            <div class="form-group">
+                <input placeholder="Last Name" formControlName="lastName">
+            </div>
+
+            <div class="form-group">
+                <input type="email" placeholder="Email Address" formControlName="email">
+            </div>
+
+            <div class="form-group">
+                <input type="tel" placeholder="Phone Number" formControlName="phone">
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Password" formControlName="password">
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                <small *ngIf="submitted && f['confirmPassword']?.errors?.['mustMatch']">
+                    Passwords must match
+                </small>
+            </div>
+
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" formControlName="terms">
+                    I agree to the terms and conditions
+                </label>
+            </div>
+
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+            <button type="submit" class="signup-btn">Create Account</button>
+
+            <p class="footer-text">
+                Already have an account?
+                <a [routerLink]="['/login']" [queryParams]="{ returnUrl: returnUrl }">Login</a>
+            </p>
+
+        </form>
+    </div>
+</div>

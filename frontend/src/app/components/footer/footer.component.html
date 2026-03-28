@@ -1,0 +1,45 @@
+<footer>
+    <div class="footer-top-row">
+        <div class="footer-newsletter">
+            <h4>Subscribe to our Newsletter</h4>
+            <p>Get the latest rental deals and exclusive offers.</p>
+            <div class="subscribe-form" *ngIf="!subscribed">
+                <input type="email" placeholder="Enter your email" [(ngModel)]="newsEmail">
+                <button type="button" (click)="subscribe()">Subscribe</button>
+            </div>
+            <div class="subscribe-success" *ngIf="subscribed" style="color: #38bdf8; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-check-circle"></i> Thanks for subscribing!
+            </div>
+        </div>
+
+        <div class="footer-payments">
+            <h4>Accepted Payments</h4>
+            <div class="payment-icons">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-brands fa-cc-apple-pay"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-content">
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/1royalty_ja?igsh=ZXpsMGV1d2p0eG9v&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://whatsapp.com/dl/" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.tiktok.com/@ruptiondeceived?_r=1&_t=ZS-94lbzyAtvGR" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+
+        <div class="footer-links">
+            <a routerLink="/">Home</a>
+            <a routerLink="/cars">Available Cars</a>
+            <a routerLink="/about-us">About Us</a>
+            <a routerLink="/contactus">Contact Us</a>
+        </div>
+
+        <p class="copy">© 2026 City Wheels All Rights Reserved.</p>
+    </div>
+</footer>

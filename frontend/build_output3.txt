@@ -1,0 +1,27 @@
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+Error: src/app/pages/admin/admin-dashboard/admin-dashboard.component.html:127:38 - error TS2367: This condition will always return 'false' since the types '"users"' and '"inventory"' have no overlap.
+
+127         <div class="tab-pane" *ngIf="activeTab === 'inventory'">
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/admin/admin-dashboard/admin-dashboard.component.ts:6:16
+    6   templateUrl: './admin-dashboard.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminDashboardComponent.
+
+
+Error: src/app/pages/admin/admin-dashboard/admin-dashboard.component.html:240:38 - error TS2367: This condition will always return 'false' since the types '"users"' and '"add-car"' have no overlap.
+
+240         <div class="tab-pane" *ngIf="activeTab === 'add-car'">
+                                         ~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/admin/admin-dashboard/admin-dashboard.component.ts:6:16
+    6   templateUrl: './admin-dashboard.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminDashboardComponent.
+
+
+

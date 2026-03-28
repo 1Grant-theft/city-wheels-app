@@ -1,0 +1,85 @@
+<section class="contact-hero">
+    <div class="contact-wrapper">
+
+        <div class="contact-header">
+            <h1>Get in Touch</h1>
+            <p>We're here to help you with bookings, questions and customer support.<br>
+                Your journey starts with City Wheels.</p>
+        </div>
+
+        <div class="contact-main">
+            <div class="contact-info-box">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong>Phone / WhatsApp</strong>
+                        <p>(876) 219-2136</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email Address</strong>
+                        <p>citywheelscars@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Our Location</strong>
+                        <p>23 Constant Spring Road, Kingston</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Business Hours</strong>
+                        <p>Mon-Sat: 8 AM - 6 PM<br>Sun: By Appointment</p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/1royalty_ja?igsh=ZXpsMGV1d2p0eG9v&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@ruptiondeceived?_r=1&_t=ZS-94lbzyAtvGR" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://whatsapp.com/dl/" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Success/Error Notifications -->
+            <div class="contact-feedback success" *ngIf="successMessage">
+                <i class="fas fa-check-circle"></i> {{ successMessage }}
+            </div>
+            <div class="contact-feedback error" *ngIf="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+            </div>
+
+            <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+                <h3>Send Us a Message</h3>
+                <div class="input-group">
+                    <input type="text" name="name" [(ngModel)]="contactData.name" placeholder="Your Name" required>
+                    <input type="email" name="email" [(ngModel)]="contactData.email" placeholder="Your Email" required>
+                </div>
+                <input type="text" name="phone" [(ngModel)]="contactData.phone" placeholder="Your Phone Number">
+
+                <select name="reason" [(ngModel)]="contactData.reason" required>
+                    <option value="Rent a Car">Rent a Car</option>
+                    <option value="Ask a Question">Ask a Question</option>
+                    <option value="Report an Issue">Report an Issue</option>
+                </select>
+
+                <textarea name="message" [(ngModel)]="contactData.message" rows="5" placeholder="How can we help you?" required></textarea>
+                
+                <button type="submit" [disabled]="isSubmitting || contactForm.invalid">
+                    <span *ngIf="!isSubmitting">Send Message <i class="fas fa-paper-plane"></i></span>
+                    <span *ngIf="isSubmitting"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+</section>

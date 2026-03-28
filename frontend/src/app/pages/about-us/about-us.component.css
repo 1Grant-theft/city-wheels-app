@@ -1,0 +1,169 @@
+.about-us-container {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: auto;
+    padding: 60px 20px;
+}
+
+/* blurred car background */
+.about-us-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/car banner.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    transform: scale(1.1);
+}
+
+/* dark overlay */
+.about-us-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* glass card */
+.about-us-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    padding: 60px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    color: white;
+    animation: fadeIn .6s ease;
+}
+
+.about-us-card h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.intro-description {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #e5e7eb;
+    margin-bottom: 50px;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intro-description strong {
+    color: #38bdf8;
+    font-weight: 600;
+}
+
+/* profiles */
+.profiles-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.profile-card {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 30px 25px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.profile-card:hover {
+    transform: translateY(-8px);
+    border-color: #38bdf8;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.profile-img-container {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #38bdf8;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-card h3 {
+    margin: 0 0 5px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.role {
+    margin: 0 0 15px;
+    color: #38bdf8;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.bio {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .about-us-container {
+        padding: 40px 15px;
+    }
+
+    .about-us-card {
+        padding: 30px 20px;
+    }
+
+    .profiles-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .profile-card {
+        width: 100%;
+    }
+}

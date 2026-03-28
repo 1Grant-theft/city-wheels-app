@@ -1,0 +1,30 @@
+html, body {
+height: 100%;
+margin: 0;
+}
+
+app-root {
+min-height: 100%;
+display: flex;
+flex-direction: column;
+}
+
+router-outlet + * {
+flex: 1;
+}
+
+/* Global Responsive Adjustments */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px; /* Slightly smaller base font on mobile */
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

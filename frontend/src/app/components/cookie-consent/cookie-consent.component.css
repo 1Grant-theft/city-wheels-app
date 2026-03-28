@@ -1,0 +1,122 @@
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background: rgba(31, 41, 55, 0.95);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10000;
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .cookie-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.cookie-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  font-family: 'Inter', sans-serif;
+}
+
+.cookie-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #d1d5db;
+  font-family: 'Inter', sans-serif;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-accept, .btn-decline {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-accept {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.btn-accept:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-decline {
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid #4b5563;
+}
+
+.btn-decline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f3f4f6;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 150%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.learn-more-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.learn-more-link:hover {
+  text-decoration: underline;
+}
+
+.cookie-details {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+.cookie-details p {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

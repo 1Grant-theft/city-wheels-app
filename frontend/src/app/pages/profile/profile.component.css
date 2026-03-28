@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+.profile-container {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: auto;
+    padding: 60px 20px;
+}
+
+.profile-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/car banner.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    transform: scale(1.1);
+}
+
+.profile-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.profile-card {
+    position: relative;
+    z-index: 2;
+    width: 800px;
+    max-width: 100%;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    color: white;
+    animation: fadeIn .6s ease;
+    overflow: hidden;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar i {
+    font-size: 80px;
+    color: #38bdf8;
+}
+
+.user-info h2 {
+    margin: 0 0 5px 0;
+    font-weight: 600;
+}
+
+.user-info p {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+.member-since {
+    font-size: 13px;
+    color: #bae6fd;
+    background: rgba(56, 189, 248, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* Tabs */
+
+.dashboard-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 18px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.7;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    opacity: 1;
+}
+
+.tab-btn.active {
+    opacity: 1;
+    border-bottom: 3px solid #38bdf8;
+    color: #38bdf8;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Content Area */
+
+.dashboard-content {
+    padding: 30px 40px 40px;
+    min-height: 300px;
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    text-align: center;
+    color: #e2e8f0;
+}
+
+.loading-state i,
+.empty-state i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #94a3b8;
+}
+
+.empty-state .browse-btn {
+    margin-top: 20px;
+    background: #38bdf8;
+    color: white;
+    text-decoration: none;
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+.empty-state .browse-btn:hover {
+    background: #0ea5e9;
+}
+
+.retry-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Transaction List */
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    transition: 0.25s;
+}
+
+.transaction-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.item-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.status-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-badge.reserved {
+    background: rgba(250, 204, 21, 0.2);
+    color: #fde047;
+    border: 1px solid rgba(250, 204, 21, 0.4);
+}
+
+.status-badge.completed {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.4);
+}
+
+.item-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.item-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #e2e8f0;
+}
+
+.item-details strong {
+    color: white;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .dashboard-tabs {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        padding: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 3px solid transparent;
+    }
+
+    .tab-btn.active {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 3px solid #38bdf8;
+    }
+
+    .dashboard-content {
+        padding: 20px 15px;
+    }
+
+    .item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* History Actions */
+.history-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.clear-history-btn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clear-history-btn:hover:not([disabled]) {
+    background: rgba(239, 68, 68, 0.4);
+    color: white;
+}
+
+.clear-history-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

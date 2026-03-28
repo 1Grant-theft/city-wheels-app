@@ -1,0 +1,344 @@
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <p>Manage your platform's users and vehicle inventory</p>
+    </div>
+
+    <div class="stats-overview">
+        <div class="stat-card">
+            <div class="stat-icon revenue"><i class="fas fa-dollar-sign"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total Revenue</span>
+                <span class="stat-value">${{ stats.totalRevenue | number:'1.0-0' }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon fleet"><i class="fas fa-car"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total Cars</span>
+                <span class="stat-value">{{ stats.fleetSize }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon reservations"><i class="fas fa-calendar-check"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Active Bookings</span>
+                <span class="stat-value">{{ stats.activeReservations }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon users"><i class="fas fa-user-friends"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total Users</span>
+                <span class="stat-value">{{ stats.totalUsers }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-tabs">
+        <button class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">
+            <i class="fas fa-users"></i> User Management
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'inventory'" (click)="activeTab = 'inventory'">
+            <i class="fas fa-boxes"></i> Manage Inventory
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'add-car'" (click)="activeTab = 'add-car'">
+            <i class="fas fa-car-side"></i> Add New Car
+        </button>
+    </div>
+
+    <div class="dashboard-content">
+
+        <!-- Users Tab -->
+        <div class="tab-pane" *ngIf="activeTab === 'users'">
+            <div class="section-header">
+                <h2>Registered Users</h2>
+            </div>
+            
+            <div class="loading-state" *ngIf="isLoadingUsers">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <p>Loading users...</p>
+            </div>
+
+            <div class="error-state" *ngIf="userError && !isLoadingUsers">
+                <p>{{ userError }}</p>
+                <button class="retry-btn" (click)="fetchUsers()">Retry</button>
+            </div>
+
+            <div class="table-container" *ngIf="!isLoadingUsers && !userError">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>#{{ user.id }}</td>
+                            <td>{{ user.firstName }} {{ user.lastName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone || 'N/A' }}</td>
+                            <td>
+                                <span class="role-badge" [ngClass]="user.role === 'admin' ? 'admin' : 'user'">
+                                    {{ user.role }}
+                                </span>
+                            </td>
+                            <td>{{ user.createdAt | date:'shortDate' }}</td>
+                            <td class="action-buttons">
+                                <button class="action-btn view-btn" (click)="viewUserHistory(user)" title="View History">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                                <button class="action-btn delete-btn" (click)="deleteUser(user.id)" [disabled]="user.role === 'admin'" title="Delete User">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="users.length === 0">
+                            <td colspan="7" class="empty-cell">No users found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- User History Modal -->
+            <div class="modal-overlay" *ngIf="selectedUserForHistory">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Rental History: {{ selectedUserForHistory.firstName }} {{ selectedUserForHistory.lastName }}</h3>
+                        <button class="close-btn" (click)="closeHistoryModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="user-profile-details" *ngIf="selectedUserForHistory">
+                            <p><strong>Email:</strong> {{ selectedUserForHistory.email }}</p>
+                            <p><strong>Phone:</strong> {{ selectedUserForHistory.phone || 'N/A' }}</p>
+                            <p><strong>Joined:</strong> {{ selectedUserForHistory.createdAt | date:'mediumDate' }}</p>
+                        </div>
+                        <hr>
+                        <div *ngIf="isLoadingHistory" class="loading-state">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </div>
+                        <div *ngIf="!isLoadingHistory && userHistory.length === 0" class="empty-state">
+                            <p>This user has no rental history.</p>
+                        </div>
+                        
+                        <div *ngIf="!isLoadingHistory && userHistory.length > 0">
+                            <h4 class="history-section-title">Active Reservations</h4>
+                            <div *ngIf="presentReservations.length === 0" class="empty-sub-state">No active reservations.</div>
+                            <ul class="history-list" *ngIf="presentReservations.length > 0">
+                                <li *ngFor="let tx of presentReservations" class="history-item">
+                                    <strong>{{ tx.carName }}</strong>
+                                    <span>Status: <span [class]="'status-' + tx.status">{{ tx.status }}</span></span>
+                                    <span>Amount: ${{ tx.amount }}</span>
+                                    <span>Date: {{ tx.createdAt | date:'shortDate' }}</span>
+                                </li>
+                            </ul>
+
+                            <h4 class="history-section-title">Past History</h4>
+                            <div *ngIf="pastReservations.length === 0" class="empty-sub-state">No past history.</div>
+                            <ul class="history-list" *ngIf="pastReservations.length > 0">
+                                <li *ngFor="let tx of pastReservations" class="history-item">
+                                    <strong>{{ tx.carName }}</strong>
+                                    <span>Status: <span [class]="'status-' + tx.status">{{ tx.status }}</span></span>
+                                    <span>Amount: ${{ tx.amount }}</span>
+                                    <span>Date: {{ tx.createdAt | date:'shortDate' }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div class="tab-pane" *ngIf="activeTab === 'inventory'">
+            <div class="section-header">
+                <h2>Vehicle Inventory</h2>
+            </div>
+            
+            <div class="loading-state" *ngIf="isLoadingCars">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <p>Loading inventory...</p>
+            </div>
+
+            <div class="error-state" *ngIf="carError && !isLoadingCars">
+                <p>{{ carError }}</p>
+                <button class="retry-btn" (click)="fetchCars()">Retry</button>
+            </div>
+
+            <div class="table-container" *ngIf="!isLoadingCars && !carError">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vehicle</th>
+                            <th>Year</th>
+                            <th>Category</th>
+                            <th>Price / Day</th>
+                            <th>Seats</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let car of cars">
+                            <td>#{{ car.id }}</td>
+                            <td><strong>{{ car.make }}</strong> {{ car.model }}</td>
+                            <td>{{ car.year }}</td>
+                            <td>{{ car.category }}</td>
+                            <td>${{ car.price_per_day }}</td>
+                            <td>{{ car.seats }}</td>
+                            <td class="action-buttons">
+                                <button class="action-btn edit-btn" (click)="editCar(car)" title="Edit Car">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="cars.length === 0">
+                            <td colspan="7" class="empty-cell">No vehicles in inventory.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Edit Car Modal -->
+            <div class="modal-overlay" *ngIf="editingCar">
+                <div class="modal-content edit-modal">
+                    <div class="modal-header">
+                        <h3>Edit Vehicle: {{ editingCar.make }} {{ editingCar.model }}</h3>
+                        <button class="close-btn" (click)="cancelEditCar()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="admin-form pop-form" (ngSubmit)="saveCarEdit()">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Make</label>
+                                    <input type="text" name="make" [(ngModel)]="editingCar.make" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Model</label>
+                                    <input type="text" name="model" [(ngModel)]="editingCar.model" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Year</label>
+                                    <input type="number" name="year" [(ngModel)]="editingCar.year" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price Per Day ($)</label>
+                                    <input type="number" name="price" [(ngModel)]="editingCar.price_per_day" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select name="category" [(ngModel)]="editingCar.category">
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Luxury">Luxury</option>
+                                        <option value="Truck">Truck</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Transmission</label>
+                                    <select name="transmission" [(ngModel)]="editingCar.transmission">
+                                        <option value="Automatic">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Seats</label>
+                                    <input type="number" name="seats" [(ngModel)]="editingCar.seats" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="action-btn cancel-btn" (click)="cancelEditCar()">Cancel</button>
+                                <button type="submit" class="submit-btn save-btn">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Car Tab -->
+        <div class="tab-pane" *ngIf="activeTab === 'add-car'">
+            <div class="section-header">
+                <h2>Add Vehicle to Inventory</h2>
+            </div>
+
+            <div class="feedback-message" *ngIf="submitMessage" [ngClass]="submitMessage.type">
+                {{ submitMessage.text }}
+            </div>
+
+            <form class="admin-form" (ngSubmit)="onAddCarSubmit()">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="make">Make *</label>
+                        <input type="text" id="make" name="make" [(ngModel)]="carData.make" required placeholder="e.g. Toyota">
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model *</label>
+                        <input type="text" id="model" name="model" [(ngModel)]="carData.model" required placeholder="e.g. Camry">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" name="year" [(ngModel)]="carData.year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price Per Day ($) *</label>
+                        <input type="number" id="price" name="price_per_day" [(ngModel)]="carData.price_per_day" required placeholder="e.g. 50">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" [(ngModel)]="carData.category">
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="Truck">Truck</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission" name="transmission" [(ngModel)]="carData.transmission">
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="seats">Seats</label>
+                        <input type="number" id="seats" name="seats" [(ngModel)]="carData.seats" required>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="carImage">Vehicle Image *</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="carImage" (change)="onFileSelected($event)" accept="image/*" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+                        <i class="fas fa-spinner fa-spin" *ngIf="isSubmitting"></i> 
+                        {{ isSubmitting ? 'Adding Vehicle...' : 'Add Vehicle to Inventory' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

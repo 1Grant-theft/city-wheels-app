@@ -1,0 +1,75 @@
+<div *ngIf="car" class="car-details">
+    <h2>{{ car.name }}</h2>
+
+    <img class="main-image" [src]="car.mainImage" alt="{{ car.name }}" (click)="openImage(car.mainImage)" />
+
+
+    <h3>Interior</h3>
+
+    <div class="interior-grid">
+        <div class="image-card" *ngFor="let img of car.interiorImages" (click)="openImage(img)">
+
+            <img [src]="img" alt="Car interior" />
+        </div>
+    </div>
+
+    <div class="car-info-grid">
+        <div class="price-bubble">
+            <span class="price-label">Price per day (JMD)</span>
+            <span class="price-value">${{ car.price }}</span>
+        </div>
+
+        <div class="specs-grid">
+            <div class="spec-item">
+                <i class="fas fa-users icon-blue"></i>
+                <div class="spec-text">
+                    <span class="spec-label">Seats</span>
+                    <span class="spec-value">{{ car.seats }}</span>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-cogs icon-blue"></i>
+                <div class="spec-text">
+                    <span class="spec-label">Transmission</span>
+                    <span class="spec-value">{{ car.transmission }}</span>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-gas-pump icon-blue"></i>
+                <div class="spec-text">
+                    <span class="spec-label">Fuel</span>
+                    <span class="spec-value">{{ car.fuel }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button routerLink="/cars" class="rent-btn back-btn outline">
+            Back To Cars
+        </button>
+
+        <div class="availability-status" [class.is-reserved]="car.isCurrentlyReserved">
+            <i class="fas" [ngClass]="car.isCurrentlyReserved ? 'fa-calendar-times' : 'fa-calendar-check'"></i>
+            <span>{{ car.isCurrentlyReserved ? 'Currently Reserved' : 'Available for Booking' }}</span>
+        </div>
+        
+        <p class="reserved-date-info" *ngIf="car.isCurrentlyReserved">
+            Expected return: <strong>{{ car.reservedUntil | date:'mediumDate' }}</strong>
+        </p>
+
+        <button class="rent-btn" routerLink="/payment/{{ car.id }}" [disabled]="car.isCurrentlyReserved">
+            {{ car.isCurrentlyReserved ? 'Currently Unavailable' : 'Reserve Now' }}
+        </button>
+    </div>
+
+</div>
+
+<div class="lightbox" *ngIf="currentImageIndex !== -1" (click)="closeImage()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+        <span class="close-btn" (click)="closeImage()">×</span>
+        <button class="nav-btn prev-btn" (click)="prevImage($event)">&#10094;</button>
+        <img [src]="currentImages[currentImageIndex]" />
+        <button class="nav-btn next-btn" (click)="nextImage($event)">&#10095;</button>
+    </div>
+</div>

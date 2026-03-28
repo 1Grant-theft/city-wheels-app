@@ -1,0 +1,592 @@
+.payment-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: auto;
+    padding: 60px 20px;
+}
+
+/* blurred car background */
+.payment-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url('/assets/car banner.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    transform: scale(1.1);
+}
+
+/* dark overlay */
+.payment-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.payment-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 500px;
+    padding: 0; /* Changed to 0 for internal spacing */
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    color: white;
+    overflow: hidden;
+}
+
+.payment-card.widescreen {
+    max-width: 900px;
+}
+
+.payment-grid {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+/* Left Column: Car Summary */
+.car-summary {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #38bdf8;
+}
+
+.summary-header p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.car-preview {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.car-preview img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    margin-bottom: 20px;
+}
+
+.car-info-badge h4 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.car-info-badge .year {
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+.detail-list {
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+}
+
+.detail-item span {
+    opacity: 0.7;
+}
+
+.price-breakdown {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: #38bdf8;
+    font-size: 1.1rem;
+}
+
+/* Right Column: Details */
+.reservation-details {
+    flex: 1.3;
+    padding: 40px;
+}
+
+.reservation-details h2 {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 1.8rem;
+}
+
+.subtitle {
+    color: #e5e7eb;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+.trust-badges {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.badge {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.badge i {
+    font-size: 1.6rem;
+    color: #38bdf8;
+    margin-bottom: 8px;
+}
+
+.badge span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+/* Reservation Form */
+
+.reservation-form {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-field label,
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    opacity: 0.9;
+    display: block;
+}
+
+.form-field input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.form-field input:focus,
+.form-group textarea:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, .4);
+}
+
+.form-field input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group.row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group.row .form-field {
+    flex: 1;
+}
+
+/* In-Person Info */
+.in-person-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(56, 189, 248, 0.15);
+    border-left: 4px solid #38bdf8;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+}
+
+.in-person-info i {
+    font-size: 1.4rem;
+    color: #38bdf8;
+}
+
+.in-person-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Policy Checkbox */
+.policy-agreement {
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+}
+
+.policy-agreement label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.policy-agreement input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: #38bdf8;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Confirm Button */
+.confirm-btn {
+    width: 100%;
+    padding: 14px;
+    background: #38bdf8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.confirm-btn:hover:not([disabled]) {
+    background: #0ea5e9;
+    transform: translateY(-1px);
+}
+
+.confirm-btn[disabled] {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+}
+
+/* Payment Modal Styles */
+.payment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 450px;
+    padding: 35px;
+    border-radius: 16px;
+    position: relative;
+    color: white;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.modal-header h3 {
+    margin-bottom: 10px;
+    color: #38bdf8;
+}
+
+.modal-header p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.pay-option {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pay-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.pay-option.selected {
+    border-color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+}
+
+.pay-option i {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 8px;
+    color: #38bdf8;
+}
+
+.method-details .form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.paypal-info {
+    text-align: center;
+    padding: 20px;
+}
+
+.paypal-info i {
+    font-size: 3rem;
+    color: #0070ba;
+    margin-top: 10px;
+}
+
+.pay-now-btn {
+    width: 100%;
+    padding: 15px;
+    background: #38bdf8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.security-note {
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-top: 20px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 850px) {
+    .payment-grid {
+        flex-direction: column;
+    }
+    
+    .car-summary {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+@media (max-width: 480px) {
+    .trust-badges {
+        flex-direction: column;
+    }
+    
+    .form-group.row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/* Success Modal Styles */
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    animation: fadeInModal 0.4s ease-out;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.success-card {
+    background: white;
+    width: 90%;
+    max-width: 480px;
+    padding: 50px 40px;
+    border-radius: 24px;
+    text-align: center;
+    color: #1e293b;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: slideUpScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUpScale {
+    from { transform: translateY(30px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: #10b981;
+    margin-bottom: 20px;
+}
+
+.success-card h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+
+.success-card p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.confirmation-info {
+    display: flex;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+}
+
+.conf-item {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.conf-item span {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.conf-item strong {
+    font-size: 1.1rem;
+    color: #1e293b;
+}
+
+.success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.view-profile-btn {
+    padding: 16px;
+    background: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-profile-btn:hover {
+    background: #1e293b;
+    transform: translateY(-2px);
+}
+
+.home-btn {
+    padding: 16px;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.home-btn:hover {
+    background: #f1f5f9;
+}

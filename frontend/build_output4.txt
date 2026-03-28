@@ -1,0 +1,29 @@
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+- Generating index html...
+1 rules skipped due to selector errors:
+  router-outlet+* -> Cannot read properties of undefined (reading 'type')
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names                          |  Raw Size | Estimated Transfer Size
+main.21208944da7ea21f.js      | main                           | 337.40 kB |                85.21 kB
+polyfills.7e16bdbffcf7884a.js | polyfills                      |  33.13 kB |                10.65 kB
+runtime.05680a293e032454.js   | runtime                        |   2.88 kB |                 1.38 kB
+styles.4cd72d9991ac0079.css   | styles                         | 222 bytes |               133 bytes
+
+| Initial Total                  | 373.63 kB |                97.37 kB
+
+Lazy Chunk Files              | Names                          |  Raw Size | Estimated Transfer Size
+767.b5f2a0d6e242833d.js       | pages-admin-admin-module       |  29.44 kB |                 5.99 kB
+677.9d566deb947bf413.js       | pages-cars-cars-module         |  18.81 kB |                 4.43 kB
+72.20d3b324dc6219d4.js        | pages-payment-payment-module   |  12.00 kB |                 3.09 kB
+168.070b370a6c83cc5f.js       | auth-login-login-module        |   7.06 kB |                 2.24 kB
+618.b63f9d9a478bbe7f.js       | auth-signup-signup-module      |   6.62 kB |                 2.13 kB
+713.ba09ac39b6a43d32.js       | pages-about-us-about-us-module |   4.54 kB |                 1.44 kB
+common.f8facf2df0b0b7ad.js    | common                         | 481 bytes |               274 bytes
+
+Build at: 2026-03-14T19:02:54.012Z - Hash: afee07bc59d8c8ba - Time: 31035ms

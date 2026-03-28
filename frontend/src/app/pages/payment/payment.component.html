@@ -1,0 +1,195 @@
+<div class="payment-container">
+    <div class="payment-card widescreen">
+        <div class="payment-grid">
+            <!-- Left Column: Car Summary -->
+            <div class="car-summary" *ngIf="selectedCar">
+                <div class="summary-header">
+                    <h3>Vehicle Summary</h3>
+                    <p>You are reserving:</p>
+                </div>
+
+                <div class="car-preview">
+                    <img [src]="getCarImage(selectedCar.image_url)" alt="Selected Car">
+                    <div class="car-info-badge">
+                        <h4>{{ selectedCar.make }} {{ selectedCar.model }}</h4>
+                        <span class="year">{{ selectedCar.year }}</span>
+                    </div>
+                </div>
+
+                <div class="detail-list">
+                    <div class="detail-item">
+                        <span>Category</span>
+                        <strong>{{ selectedCar.category }}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Transmission</span>
+                        <strong>{{ selectedCar.transmission }}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Seats</span>
+                        <strong>{{ selectedCar.seats }}</strong>
+                    </div>
+                </div>
+
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Price per day</span>
+                        <span class="val">${{ selectedCar.price_per_day }}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Deposit / Initial Fee</span>
+                        <span class="total-val">${{ (selectedCar.price_per_day * 0.45) | number:'1.2-2' }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Form -->
+            <div class="reservation-details">
+                <h2>Reserve Your Vehicle</h2>
+                <p class="subtitle">Secure your car today</p>
+
+                <div class="trust-badges">
+                    <div class="badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Pay at Pick-up</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-undo"></i>
+                        <span>Flexible Cancellation</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Booking</span>
+                    </div>
+                </div>
+
+                <div class="reservation-form">
+                    <div class="form-group row">
+                        <div class="form-field">
+                            <label>Pickup Date</label>
+                            <input type="date" [(ngModel)]="pickupDate" name="pickupDate" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Return Date</label>
+                            <input type="date" [(ngModel)]="returnDate" name="returnDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Notes (Optional)</label>
+                        <textarea rows="3" placeholder="Special requests..." [(ngModel)]="reservationNotes"
+                            name="reservationNotes"></textarea>
+                    </div>
+                </div>
+
+                <div class="in-person-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>All payment options (Credit Card, Debit Card, and Cash) are accepted in person upon vehicle
+                        pickup and inspection.</p>
+                </div>
+
+                <div class="policy-agreement">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="policyAccepted" name="policyAccepted">
+                        <span>I agree to the cancellation policy and understand a 45% fee applies before reservations
+                            and
+                            in the event of late cancellations.</span>
+                    </label>
+                </div>
+
+                <p class="error-text" *ngIf="errorMessage"
+                    style="color: #fecaca; text-align: center; margin-top: 15px;">{{ errorMessage }}</p>
+
+                <button class="confirm-btn" [disabled]="isProcessing || !policyAccepted" (click)="openPaymentModal()">
+                    {{ isProcessing ? 'Processing Reservation...' : 'Complete Reservation' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="payment-modal" *ngIf="showPaymentModal">
+    <div class="modal-content">
+        <span class="close-modal" (click)="showPaymentModal = false">&times;</span>
+        
+        <div class="modal-header">
+            <h3>Complete Your Deposit</h3>
+            <p>To secure your reservation, a 45% deposit of <strong>${{ depositAmount | number:'1.2-2' }}</strong> is required.</p>
+        </div>
+
+        <div class="payment-methods">
+            <div class="pay-option" [class.selected]="selectedPayMethod === 'card'" (click)="selectedPayMethod = 'card'">
+                <i class="fas fa-credit-card"></i>
+                <span>Credit / Debit Card</span>
+            </div>
+            <div class="pay-option" [class.selected]="selectedPayMethod === 'paypal'" (click)="selectedPayMethod = 'paypal'">
+                <i class="fab fa-paypal"></i>
+                <span>PayPal</span>
+            </div>
+        </div>
+
+        <!-- Card Form -->
+        <div class="method-details" *ngIf="selectedPayMethod === 'card'">
+            <div class="form-field">
+                <label>Cardholder Name</label>
+                <input type="text" placeholder="John Doe">
+            </div>
+            <div class="form-field">
+                <label>Card Number</label>
+                <input type="text" placeholder="**** **** **** ****">
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Expiry Date</label>
+                    <input type="text" placeholder="MM / YY">
+                </div>
+                <div class="form-field">
+                    <label>CVC</label>
+                    <input type="text" placeholder="***">
+                </div>
+            </div>
+        </div>
+
+        <!-- PayPal Info -->
+        <div class="method-details paypal-info" *ngIf="selectedPayMethod === 'paypal'">
+            <p>You will be redirected to PayPal to complete your payment.</p>
+            <i class="fab fa-paypal"></i>
+        </div>
+
+        <button class="pay-now-btn" [disabled]="isProcessing || !selectedPayMethod" (click)="submitReservation()">
+            {{ isProcessing ? 'Processing...' : 'Pay Deposit & Reserve' }}
+        </button>
+        
+        <p class="security-note">
+            <i class="fas fa-lock"></i> SSL Secured Payment Encryption
+        </p>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="success-modal-overlay" *ngIf="showSuccessModal">
+    <div class="success-card">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Reservation Confirmed!</h2>
+        <p>Your vehicle is locked in for your selected dates. A confirmation email has been sent to your registered address.</p>
+        
+        <div class="confirmation-info">
+            <div class="conf-item">
+                <span>Confirmation #</span>
+                <strong>CW-{{ lastTransactionId }}</strong>
+            </div>
+            <div class="conf-item">
+                <span>Pickup Date</span>
+                <strong>{{ pickupDate | date:'mediumDate' }}</strong>
+            </div>
+        </div>
+
+        <div class="success-actions">
+            <button class="view-profile-btn" routerLink="/profile">View My Reservations</button>
+            <button class="home-btn" routerLink="/">Return Home</button>
+        </div>
+    </div>
+</div>

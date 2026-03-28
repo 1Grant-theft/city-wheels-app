@@ -1,0 +1,38 @@
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <img src="assets/city wheels logo 2.0.png" class="logo">
+            <h2>Login</h2>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <input type="email" placeholder="Email" formControlName="email">
+                <small *ngIf="submitted && f['email']?.errors">Email is required</small>
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Password" formControlName="password">
+                <small *ngIf="submitted && f['password']?.errors">Password is required</small>
+            </div>
+
+            <div class="form-options">
+                <label>
+                    <input type="checkbox" formControlName="rememberMe"> Remember me
+                </label>
+                <a routerLink="/forgot-password">Forgot password?</a>
+            </div>
+
+            <button class="login-btn" type="submit">Login</button>
+
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+            <p class="footer-text">
+                Don’t have an account?
+                <a [routerLink]="['/signup']" [queryParams]="{ returnUrl: returnUrl }">Sign up</a>
+            </p>
+
+        </form>
+    </div>
+</div>
