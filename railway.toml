@@ -1,0 +1,6 @@
+[build]
+  builder = "NIXPACKS"
+  watch = ["backend"]
+
+[deploy]
+  startCommand = "cd backend && npm install && npm start"
