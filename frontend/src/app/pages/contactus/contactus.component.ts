@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contactus',
@@ -30,7 +31,7 @@ export class ContactusComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
-    this.http.post('http://localhost:3000/api/contact', this.contactData).subscribe({
+    this.http.post(`${environment.apiUrl}/api/contact`, this.contactData).subscribe({
       next: (res: any) => {
         this.successMessage = res.message;
         this.isSubmitting = false;

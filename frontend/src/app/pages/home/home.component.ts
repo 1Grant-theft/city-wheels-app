@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   fetchFeaturedCars() {
-    this.http.get<any[]>('http://localhost:3000/api/cars').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/cars`).subscribe({
       next: (data) => {
         // Take the first 3 cars for the featured section
         this.cars = data.slice(0, 3);

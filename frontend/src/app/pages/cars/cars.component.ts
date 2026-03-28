@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cars',
@@ -23,7 +24,7 @@ export class CarsComponent implements OnInit {
 
   fetchCars() {
     this.isLoading = true;
-    this.http.get<any[]>('http://localhost:3000/api/cars').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/cars`).subscribe({
       next: (res) => {
         this.cars = res.map(car => {
           let imageUrl = 'assets/cars/default.png';
@@ -31,7 +32,7 @@ export class CarsComponent implements OnInit {
             if (car.image_url.startsWith('assets/')) {
               imageUrl = car.image_url;
             } else {
-              imageUrl = `http://localhost:3000${car.image_url}`;
+              imageUrl = `${environment.apiUrl}${car.image_url}`;
             }
           }
           return {

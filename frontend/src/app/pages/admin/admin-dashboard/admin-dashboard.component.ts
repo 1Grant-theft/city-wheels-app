@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -61,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.get<any[]>('http://localhost:3000/api/admin/transactions', { headers }).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/admin/transactions`, { headers }).subscribe({
       next: (res) => {
         this.calculateStats(res);
       },
@@ -91,7 +92,7 @@ export class AdminDashboardComponent implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
-    this.http.get<any[]>('http://localhost:3000/api/users', { headers }).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/users`, { headers }).subscribe({
       next: (res) => {
         this.users = res;
         this.stats.totalUsers = res.length;
@@ -108,7 +109,7 @@ export class AdminDashboardComponent implements OnInit {
   fetchCars() {
     this.isLoadingCars = true;
     this.carError = '';
-    this.http.get<any[]>('http://localhost:3000/api/cars').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/cars`).subscribe({
       next: (res) => {
         this.cars = res;
         this.stats.fleetSize = res.length;
@@ -128,7 +129,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.delete(`http://localhost:3000/api/users/${userId}`, { headers }).subscribe({
+    this.http.delete(`${environment.apiUrl}/api/users/${userId}`, { headers }).subscribe({
       next: () => {
         alert('User deleted successfully.');
         this.fetchUsers(); // refresh the list
@@ -156,7 +157,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.get<any[]>(`http://localhost:3000/api/admin/users/${user.id}/transactions`, { headers }).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/admin/users/${user.id}/transactions`, { headers }).subscribe({
       next: (res) => {
         this.userHistory = res;
         this.pastReservations = res.filter(tx => tx.status !== 'reserved');
@@ -206,7 +207,7 @@ export class AdminDashboardComponent implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
-    this.http.post('http://localhost:3000/api/cars', formData, { headers }).subscribe({
+    this.http.post(`${environment.apiUrl}/api/cars`, formData, { headers }).subscribe({
       next: (res: any) => {
         this.submitMessage = { type: 'success', text: 'Car successfully added to the database!' };
         this.isSubmitting = false;
@@ -241,7 +242,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.put(`http://localhost:3000/api/cars/${this.editingCar.id}`, this.editingCar, { headers }).subscribe({
+    this.http.put(`${environment.apiUrl}/api/cars/${this.editingCar.id}`, this.editingCar, { headers }).subscribe({
       next: () => {
         alert('Car updated successfully.');
         this.editingCar = null;

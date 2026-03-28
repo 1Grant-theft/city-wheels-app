@@ -41,10 +41,11 @@ const upload = multer({ storage });
 
 // MySQL connection
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root', // your MySQL username
-    password: '1BrickBrick1$', // your MySQL password
-    database: 'car_rental' // database name
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root', 
+    password: process.env.DB_PASSWORD || '1BrickBrick1$', 
+    database: process.env.DB_NAME || 'car_rental',
+    port: process.env.DB_PORT || 3306
 });
 
 db.connect(err => {
@@ -398,4 +399,5 @@ app.delete('/user-transactions/history', authenticateToken, (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

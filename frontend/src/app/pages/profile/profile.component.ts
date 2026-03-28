@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,7 @@ export class ProfileComponent implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
-    this.http.get('http://localhost:3000/user-transactions', { headers }).subscribe({
+    this.http.get(`${environment.apiUrl}/user-transactions`, { headers }).subscribe({
       next: (res: any) => {
         this.userData = res.user;
         this.reservations = res.transactions.filter((t: any) => t.status === 'reserved');
@@ -71,7 +72,7 @@ export class ProfileComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.delete('http://localhost:3000/user-transactions/history', { headers }).subscribe({
+    this.http.delete(`${environment.apiUrl}/user-transactions/history`, { headers }).subscribe({
       next: (res: any) => {
         alert(res.message || 'History cleared!');
         this.isClearing = false;

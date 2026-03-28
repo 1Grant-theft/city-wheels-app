@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -19,7 +20,7 @@ export class FooterComponent implements OnInit {
   subscribe() {
     if (!this.newsEmail) return;
     
-    this.http.post('http://localhost:3000/api/newsletter', { email: this.newsEmail }).subscribe({
+    this.http.post(`${environment.apiUrl}/api/newsletter`, { email: this.newsEmail }).subscribe({
       next: () => {
         this.subscribed = true;
         this.newsEmail = '';

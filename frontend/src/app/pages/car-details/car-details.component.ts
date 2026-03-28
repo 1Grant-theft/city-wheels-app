@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-car-details',
@@ -25,7 +26,7 @@ export class CarDetailsComponent implements OnInit {
 
   fetchCarDetails() {
     this.isLoading = true;
-    this.http.get<any[]>('http://localhost:3000/api/cars').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/cars`).subscribe({
       next: (res) => {
         const foundCar = res.find(c => c.id === this.carID);
         if (foundCar) {
@@ -34,7 +35,7 @@ export class CarDetailsComponent implements OnInit {
                 if (foundCar.image_url.startsWith('assets/')) {
                     imageUrl = foundCar.image_url;
                 } else {
-                    imageUrl = `http://localhost:3000${foundCar.image_url}`;
+                    imageUrl = `${environment.apiUrl}${foundCar.image_url}`;
                 }
             }
             
