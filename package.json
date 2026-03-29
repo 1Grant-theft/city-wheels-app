@@ -2,7 +2,9 @@
     "name": "smart-budget-root",
     "version": "1.0.0",
     "scripts": {
-        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "build": "cd backend && npm install",
+        "start": "cd backend && node server.js",
+        "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
         "start:backend": "cd backend && npx nodemon server.js",
         "start:frontend": "cd frontend && npm start",
         "install:all": "cd backend && npm install && cd ../frontend && npm install"
