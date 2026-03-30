@@ -312,7 +312,11 @@
 
 @media (max-width: 576px) {
   .header {
-    padding: 10px 20px;
+    padding: 10px 15px;
+  }
+
+  .nav-actions {
+    gap: 10px;
   }
   
   .brand-name {
@@ -329,7 +333,13 @@
     margin-right: 0;
   }
 
-  .login-btn, .logout-btn {
+  .logout-btn {
     display: none; /* Use mobile menu for these */
+  }
+
+  .login-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    font-size: 0.85rem;
   }
 }
