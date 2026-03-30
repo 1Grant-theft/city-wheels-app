@@ -49,8 +49,8 @@
                             <span class="status-badge reserved"><i class="fas fa-clock"></i> Reserved</span>
                         </div>
                         <div class="item-details">
-                            <p><strong>Pickup:</strong> {{ res.pickupDate | date:'mediumDate' }}</p>
-                            <p><strong>Return:</strong> {{ res.returnDate | date:'mediumDate' }}</p>
+                            <p><strong>Pickup:</strong> {{ res.pickupDate | date:'mediumDate':'UTC' }}</p>
+                            <p><strong>Return:</strong> {{ res.returnDate | date:'mediumDate':'UTC' }}</p>
                             <p><strong>Amount Due:</strong> ${{ res.amount }} (Pay at Pickup)</p>
                         </div>
                     </div>

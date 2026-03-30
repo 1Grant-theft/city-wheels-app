@@ -36,9 +36,17 @@
                         <span>Price per day</span>
                         <span class="val">${{ selectedCar.price_per_day }}</span>
                     </div>
+                    <div class="price-row" *ngIf="totalDays > 0">
+                        <span>Days</span>
+                        <span class="val">{{ totalDays }}</span>
+                    </div>
+                    <div class="price-row" *ngIf="totalDays > 0">
+                        <span>Total Price</span>
+                        <span class="val">${{ totalAmount | number:'1.2-2' }}</span>
+                    </div>
                     <div class="total-row">
-                        <span>Deposit / Initial Fee</span>
-                        <span class="total-val">${{ (selectedCar.price_per_day * 0.45) | number:'1.2-2' }}</span>
+                        <span>Deposit (45%)</span>
+                        <span class="total-val">${{ depositAmount | number:'1.2-2' }}</span>
                     </div>
                 </div>
             </div>
@@ -67,11 +75,11 @@
                     <div class="form-group row">
                         <div class="form-field">
                             <label>Pickup Date</label>
-                            <input type="date" [(ngModel)]="pickupDate" name="pickupDate" required>
+                            <input type="date" [(ngModel)]="pickupDate" (change)="calculateTotal()" name="pickupDate" required>
                         </div>
                         <div class="form-field">
                             <label>Return Date</label>
-                            <input type="date" [(ngModel)]="returnDate" name="returnDate" required>
+                            <input type="date" [(ngModel)]="returnDate" (change)="calculateTotal()" name="returnDate" required>
                         </div>
                     </div>
 
@@ -91,9 +99,7 @@
                 <div class="policy-agreement">
                     <label>
                         <input type="checkbox" [(ngModel)]="policyAccepted" name="policyAccepted">
-                        <span>I agree to the cancellation policy and understand a 45% fee applies before reservations
-                            and
-                            in the event of late cancellations.</span>
+                        <span>I agree to the <a (click)="showPolicyModal = true" style="color: #38bdf8; cursor: pointer; text-decoration: underline;">Cancellation Policy</a> and understand a 45% fee applies before reservations and in the event of late cancellations.</span>
                     </label>
                 </div>
 
@@ -105,6 +111,29 @@
                 </button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Cancellation Policy Modal -->
+<div class="payment-modal" *ngIf="showPolicyModal">
+    <div class="modal-content">
+        <span class="close-modal" (click)="showPolicyModal = false">&times;</span>
+        
+        <div class="modal-header">
+            <h3>Cancellation Policy</h3>
+            <p>Please review our cancellation terms below.</p>
+        </div>
+
+        <div class="policy-details" style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; text-align: left;">
+            <p><strong>1. Deposit Requirement:</strong> A 45% non-refundable deposit is required to secure all reservations. This guarantees your vehicle for the selected dates.</p>
+            <p style="margin-top: 10px;"><strong>2. Cancellations:</strong> If you cancel your reservation, the 45% deposit will be retained as a cancellation fee. The remaining balance (if paid in advance) will be fully refunded.</p>
+            <p style="margin-top: 10px;"><strong>3. Modifications:</strong> Changes to reservation dates are subject to vehicle availability and must be requested at least 48 hours in advance.</p>
+            <p style="margin-top: 10px;"><strong>4. No-Shows:</strong> Failure to pick up the vehicle on the specified date without prior notice will result in the forfeiture of the entire deposit.</p>
+        </div>
+        
+        <button class="pay-now-btn" (click)="showPolicyModal = false; policyAccepted = true">
+            I Agree and Understand
+        </button>
     </div>
 </div>
 

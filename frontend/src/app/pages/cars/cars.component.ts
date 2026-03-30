@@ -58,7 +58,7 @@ export class CarsComponent implements OnInit {
          car.model.toLowerCase().includes(this.searchTerm.toLowerCase())) : true;
       
       const matchesCategory = this.selectedCategory !== 'All' ? 
-        car.category === this.selectedCategory : true;
+        car.category.toLowerCase() === this.selectedCategory.toLowerCase() : true;
 
       return matchesSearch && matchesCategory;
     });

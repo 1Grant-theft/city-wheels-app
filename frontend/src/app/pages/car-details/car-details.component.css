@@ -291,6 +291,16 @@
     .main-image {
         width: 100%;
     }
+
+    .car-details {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .specs-grid {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
 .main-image,

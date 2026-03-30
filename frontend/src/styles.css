@@ -1,6 +1,7 @@
 html, body {
 height: 100%;
 margin: 0;
+overflow-x: hidden;
 }
 
 app-root {
@@ -22,6 +23,11 @@ flex: 1;
 
 * {
   box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px;
 }
 
 img {

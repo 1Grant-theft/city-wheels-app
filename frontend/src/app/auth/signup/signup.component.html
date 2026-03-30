@@ -23,12 +23,18 @@
                 <input type="tel" placeholder="Phone Number" formControlName="phone">
             </div>
 
-            <div class="form-group">
-                <input type="password" placeholder="Password" formControlName="password">
+            <div class="form-group password-group">
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password">
+                <button type="button" class="toggle-password" (click)="showPassword = !showPassword" tabindex="-1">
+                    <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
             </div>
 
-            <div class="form-group">
-                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+            <div class="form-group password-group">
+                <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password" formControlName="confirmPassword">
+                <button type="button" class="toggle-password" (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
+                    <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
                 <small *ngIf="submitted && f['confirmPassword']?.errors?.['mustMatch']">
                     Passwords must match
                 </small>

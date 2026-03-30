@@ -14,6 +14,9 @@ export class SignupComponent implements OnInit {
     submitted = false;
     errorMessage = '';
     returnUrl: string = '/';
+    showPassword = false;
+    showConfirmPassword = false;
+
 
     constructor(
         private fb: FormBuilder,

@@ -102,6 +102,18 @@
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        padding: 40px 15px;
+    }
+    .filters-container {
+        padding: 0 15px;
+        flex-direction: column;
+    }
+    .search-box, .category-box select {
+        width: 100%;
+    }
+    .car-grid {
+        padding: 0 15px 40px;
+        grid-template-columns: 1fr;
     }
 }
 

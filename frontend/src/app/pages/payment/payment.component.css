@@ -454,10 +454,19 @@
     .car-summary {
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+    }
+
+    .reservation-details {
+        padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
+    .payment-container {
+        padding: 20px 10px;
+    }
+
     .trust-badges {
         flex-direction: column;
     }

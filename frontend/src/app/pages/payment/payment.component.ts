@@ -22,10 +22,13 @@ export class PaymentComponent implements OnInit {
   reservationNotes: string = '';
   policyAccepted: boolean = false;
   selectedCar: any = null;
+  totalDays: number = 0;
+  totalAmount: number = 0;
   
   // Payment Modal Properties
   showPaymentModal: boolean = false;
   showSuccessModal: boolean = false;
+  showPolicyModal: boolean = false;
   selectedPayMethod: string = 'card';
   lastTransactionId: string | number = '';
   depositAmount: number = 0;
@@ -48,6 +51,7 @@ export class PaymentComponent implements OnInit {
         if (this.selectedCar) {
           this.amount = this.selectedCar.price_per_day;
           this.depositAmount = this.amount * 0.45;
+          this.calculateTotal();
         }
       },
       error: (err) => {
@@ -75,6 +79,41 @@ export class PaymentComponent implements OnInit {
 
     this.errorMessage = '';
     this.showPaymentModal = true;
+  }
+
+  calculateTotal() {
+    if (!this.pickupDate || !this.returnDate || !this.selectedCar) {
+      this.totalDays = 0;
+      this.totalAmount = 0;
+      this.depositAmount = this.selectedCar ? this.selectedCar.price_per_day * 0.45 : 0;
+      this.amount = this.selectedCar ? this.selectedCar.price_per_day : 0;
+      return;
+    }
+
+    const start = new Date(this.pickupDate);
+    const end = new Date(this.returnDate);
+    
+    // Prevent timezone shifts by just comparing the dates as UTC or naive but setting hours to 0 helps
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+
+    const diffTime = end.getTime() - start.getTime();
+    let diffDays = diffTime / (1000 * 3600 * 24);
+
+    if (diffDays < 0) {
+       this.totalDays = 0;
+       this.totalAmount = 0;
+       this.depositAmount = this.selectedCar.price_per_day * 0.45;
+       this.amount = this.selectedCar.price_per_day;
+       return;
+    }
+    
+    if (diffDays === 0) diffDays = 1;
+
+    this.totalDays = diffDays;
+    this.totalAmount = this.selectedCar.price_per_day * this.totalDays;
+    this.depositAmount = this.totalAmount * 0.45;
+    this.amount = this.totalAmount;
   }
 
   submitReservation() {
