@@ -51,7 +51,8 @@
                         <div class="item-details">
                             <p><strong>Pickup:</strong> {{ res.pickupDate | date:'mediumDate':'UTC' }}</p>
                             <p><strong>Return:</strong> {{ res.returnDate | date:'mediumDate':'UTC' }}</p>
-                            <p><strong>Amount Due:</strong> ${{ res.amount }} (Pay at Pickup)</p>
+                            <p><strong>Deposit Paid (45%):</strong> ${{ res.amount * 0.45 | number:'1.2-2' }}</p>
+                            <p><strong>Remaining Balance:</strong> ${{ res.amount * 0.55 | number:'1.2-2' }} (Pay at Pickup)</p>
                         </div>
                     </div>
                 </div>
