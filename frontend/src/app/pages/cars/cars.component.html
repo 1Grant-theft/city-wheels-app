@@ -13,8 +13,6 @@
             <option value="All">All Categories</option>
             <option value="Sedan">Sedan</option>
             <option value="SUV">SUV</option>
-            <option value="Luxury">Luxury</option>
-            <option value="Truck">Truck</option>
         </select>
     </div>
 </div>
@@ -43,8 +41,9 @@
             <img [src]="car.image" alt="{{car.make}} {{car.model}}">
         </div>
         <h3>{{ car.make }} {{ car.model }}</h3>
-        <p class="specs">{{ car.year }} • {{ car.transmission }} • {{ car.seats }} Seats</p>
-        <p class="reserved-until" *ngIf="car.isCurrentlyReserved">Available after: {{ car.reservedUntil | date:'mediumDate' }}</p>
+        <p class="specs">{{ car.year }} • {{ car.transmission }} • 2 Seats</p>
+        <p class="reserved-until" *ngIf="car.isCurrentlyReserved">Available after: {{ car.reservedUntil |
+            date:'mediumDate' }}</p>
 
         <button [routerLink]="['/cars', car.id]" class="rent-btn" [disabled]="car.isCurrentlyReserved">
             {{ car.isCurrentlyReserved ? 'Unavailable' : 'Reserve Now' }}

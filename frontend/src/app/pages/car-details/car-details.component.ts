@@ -28,7 +28,7 @@ export class CarDetailsComponent implements OnInit {
     this.isLoading = true;
     this.http.get<any[]>(`${environment.apiUrl}/api/cars`).subscribe({
       next: (res) => {
-        const foundCar = res.find(c => c.id === this.carID);
+        const foundCar = res.find(c => c.id == this.carID);
         if (foundCar) {
             let imageUrl = 'assets/cars/default.png';
             if (foundCar.image_url) {
@@ -64,7 +64,9 @@ export class CarDetailsComponent implements OnInit {
                 transmission: foundCar.transmission,
                 fuel: 'Gasoline', 
                 mainImage: imageUrl,
-                interiorImages: interiors
+                interiorImages: interiors,
+                isCurrentlyReserved: foundCar.isCurrentlyReserved,
+                reservedUntil: foundCar.reservedUntil
             };
         } else {
             this.error = 'Car not found';
