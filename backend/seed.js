@@ -2,12 +2,8 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 
 async function seed() {
-    const db = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '1BrickBrick1$',
-        database: 'car_rental'
-    });
+    const mysqlUrl = process.env.MYSQL_URL || 'mysql://root:1BrickBrick1$@localhost:3306/car_rental';
+    const db = await mysql.createConnection(mysqlUrl);
 
     console.log('Connected to MySQL.');
 

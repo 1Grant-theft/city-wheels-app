@@ -13,7 +13,30 @@ let poolConfig;
 const mysqlUrl = getEnv('MYSQL_URL', null);
 
 if (mysqlUrl && mysqlUrl.startsWith('mysql://')) {
-    poolConfig = mysqlUrl;
+    const { URL } = require('url');
+    try {
+        const parsed = new URL(mysqlUrl);
+        const user = decodeURIComponent(parsed.username);
+        const password = decodeURIComponent(parsed.password);
+        const database = decodeURIComponent(parsed.pathname.substring(1).split('?')[0]);
+        
+        poolConfig = {
+            host: parsed.hostname,
+            port: parsed.port || 3306,
+            user: user,
+            password: password,
+            database: database,
+            ssl: {
+                rejectUnauthorized: false
+            },
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        };
+    } catch (err) {
+        console.error('Failed to parse MYSQL_URL:', err.message);
+        poolConfig = mysqlUrl;
+    }
 } else {
     poolConfig = {
         host: getEnv('MYSQLHOST', getEnv('DB_HOST', 'localhost')),
