@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://city-wheels-app-production.up.railway.app'
+  apiUrl: 'https://city-wheels-backend.onrender.com'
 };
