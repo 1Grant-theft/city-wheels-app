@@ -78,9 +78,45 @@ const seedDatabase = async (req, res) => {
     }
 };
 
+const checkDbStatus = async (req, res) => {
+    const mysqlUrl = process.env.MYSQL_URL || null;
+    const hasUrl = !!mysqlUrl;
+    
+    let maskedUrl = null;
+    if (mysqlUrl) {
+        try {
+            const { URL } = require('url');
+            const parsed = new URL(mysqlUrl);
+            parsed.password = '********';
+            maskedUrl = parsed.toString();
+        } catch (e) {
+            maskedUrl = '[Invalid URL format]';
+        }
+    }
+    
+    try {
+        const [rows] = await db.promise().query('SELECT 1');
+        res.json({
+            status: 'connected',
+            hasMysqlUrl: hasUrl,
+            maskedUrl: maskedUrl,
+            result: rows
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: 'failed',
+            hasMysqlUrl: hasUrl,
+            maskedUrl: maskedUrl,
+            error: err.message,
+            code: err.code
+        });
+    }
+};
+
 module.exports = {
     subscribeNewsletter,
     submitContactForm,
-    seedDatabase
+    seedDatabase,
+    checkDbStatus
 };
 
